@@ -1,14 +1,51 @@
+:root {
+  --color-primary: #000028;
+  --color-primary-90: #00002890;
+  --color-secondary: #111d40;
+  --color-accent-on: #fff;
+  --color-accent-90: #ffffff90;
+  --color-accent-off: #ffffff70
+  --color-background: #000;
+  --font-p: 400 1.8rem "Inter";
+  --size-standard-padding: 1rem;
+  --size-small-padding: 0.75rem;
+  --size-large-padding: 1.5rem;
+  --shadow-box: rgba(0, 0, 0, 0.25) 0px 14px 28px,
+  rgba(0, 0, 0, 0.22) 0px 10px 10px;
+  --shadow-text: rgba(0, 0, 0, 0.25) 0px 14px 28px,
+  rgba(0, 0, 0, 0.22) 0px 10px 10px;
+
+  
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("../src/fonts/Inter/Inter-Regular.ttf");
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("../src/fonts/Inter/Inter-Medium.ttf");
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("../src/fonts/Inter/Inter-SemiBold.ttf");
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: "Nasalization", -apple-system;
+  src: url("../src/fonts/Nasalization/nasalization-rg.otf");
+}
+
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
+  font-family: "Inter", Arial, Helvetica, sans-serif;
 }
 
 * {
@@ -20,7 +57,67 @@ a {
     color-scheme: dark;
   }
   body {
-    color: white;
-    background: black;
+    color: var(--color-accent-on);
+    background: var(--color-secondary);
+  }
+}
+
+h1 {
+  font-size: 5rem;
+  font-weight: 600;
+  text-shadow: var(--shadow-text);
+}
+
+h2 {
+  font-size: 3.5rem;
+  font-weight: 500;
+}
+
+h3 {
+  font-size: 2.5rem;
+  font-weight: 400;
+}
+
+h4 {
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+p {
+  font-size: 1.8rem;
+  font-weight: 400;
+}
+
+small {
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+
+main {
+  padding: 2rem 2rem;
+  height: 100vh;
+  display: flex;
+}
+
+@media (orientation: landscape) {
+  .fullBarInput {
+    display: flex;
+    align-items: center;
+    background-color: var(--color-accent-90);
+    width: 40vh;
+    height: 3.25rem;
+    border-radius: 0.75rem;
+    padding: 0.75rem;
+    box-shadow: var(--shadow-box);
+    font: var(--font-p);
+    color: var(--color-primary);
+    outline: none !important;
+    border-color: transparent;
+  }
+  .fullBarInput:focus {
+    background-color: var(--color-accent-on);
+  }
+  .fullBarInput::placeholder {
+    color: var(--color-primary-90);
   }
 }
