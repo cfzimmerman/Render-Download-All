@@ -47,30 +47,13 @@ async function AuthGetCurrentUser({ dispatch, router }: InputTypes) {
         };
         dispatch(setCurrentUser(currentUser));
       }
+    } else {
+      router.push("/Auth");
+      dispatch(setCurrentUser("unAuth"));
     }
-    router.push("/Auth");
-    dispatch(setCurrentUser("unAuth"));
   } catch (error) {
     console.log(error);
   }
 }
-
-/*
-
-      const result = (await API.graphql(
-        graphqlOperation(`
-          query GetUser {
-              getUsers (
-                  id: "${userid}"
-              ) {
-                  id
-                  displayname
-                  storagesizeinbytes
-              }
-          }
-      `)
-      )) as GraphQLResult<GetUsersQuery>;
-
-*/
 
 export default AuthGetCurrentUser;
