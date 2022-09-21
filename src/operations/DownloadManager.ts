@@ -1,30 +1,26 @@
 import { GraphQLResult } from "@aws-amplify/api-graphql";
 import { API, graphqlOperation } from "aws-amplify";
 import { PostsByUsersQuery } from "../API";
-import { setDownloadAcive, setDownloadComplete } from "../redux/download";
+import {
+  setDownloadActive,
+  setDownloadBytesCompleted,
+  setDownloadComplete,
+} from "../redux/download";
 import { DispatchType } from "../redux/store";
+import DownloadGetNextToken from "./DownloadGetNextToken";
 import DownloadSingle from "./DownloadSingle";
-
-const GetNextToken = (nextToken: string | null) => {
-  if (nextToken === null) {
-    return `nextToken: null`;
-  }
-  return `nextToken: "${nextToken}"`;
-};
-
-interface DRPT {
-  dispatch: DispatchType;
-  queryLimit: number;
-  userID: string;
-  nextToken: string | null;
-}
 
 async function DownloadRecursion({
   dispatch,
   queryLimit,
   userID,
   nextToken,
-}: DRPT): Promise<"success" | "failure"> {
+}: {
+  dispatch: DispatchType;
+  queryLimit: number;
+  userID: string;
+  nextToken: string | null;
+}) {
   try {
     const { data } = (await API.graphql(
       graphqlOperation(`
@@ -33,7 +29,7 @@ async function DownloadRecursion({
                 usersID: "${userID}",
                 sortDirection: ASC,
                 limit: ${queryLimit},
-                ${GetNextToken(nextToken)},
+                ${DownloadGetNextToken(nextToken)},
                 filter: {
                     cognitosub: {
                         ne: "deleted"
@@ -71,10 +67,8 @@ async function DownloadRecursion({
         nextToken: data.postsByUsers.nextToken,
       });
     }
-    return "success";
   } catch (error) {
     console.log(error);
-    return "failure";
   }
 }
 
@@ -83,17 +77,19 @@ interface InputTypes {
   userID: string;
 }
 
+// This function takes a user's ID and recursively iterates through all the user's posts, downloading each image and video along the way.
 async function DownloadManager({ dispatch, userID }: InputTypes) {
   try {
     const queryLimit = 20;
-    const downloadResult = await DownloadRecursion({
+    await DownloadRecursion({
       dispatch,
       queryLimit,
       userID,
       nextToken: null,
     });
-    dispatch(setDownloadAcive(false));
+    dispatch(setDownloadActive(false));
     dispatch(setDownloadComplete(true));
+    dispatch(setDownloadBytesCompleted(0));
   } catch (error) {
     console.log(error);
   }

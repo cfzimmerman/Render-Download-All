@@ -10,6 +10,7 @@ interface InputTypes {
   router: NextRouter;
 }
 
+// If user is authenticated, fill redux/auth/currentUser with necessary info and head to /index. If not, re-route to /Auth
 async function AuthGetCurrentUser({ dispatch, router }: InputTypes) {
   try {
     const userInfo = await Auth.currentUserInfo();

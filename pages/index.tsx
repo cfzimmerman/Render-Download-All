@@ -6,48 +6,11 @@ import AuthCheckAuth from "../src/operations/AuthCheckAuth";
 import { RootStateType } from "../src/redux/store";
 import GeneralLoading from "../src/components/GeneralLoading";
 import styles from "../styles/Home.module.css";
-import Head from "next/head";
 import AuthLogOut from "../src/operations/AuthLogOut";
-import DownloadSingle from "../src/operations/DownloadSingle";
-import { setDownloadAcive } from "../src/redux/download";
 import DownloadManager from "../src/operations/DownloadManager";
-
-// https://www.npmjs.com/package/js-file-download
-
-const GetDisplayNumber = ({
-  size,
-  downloadActive,
-  storageSizeInBytes,
-  downloadBytesCompleted,
-  downloadComplete,
-}: {
-  size: number | null;
-  downloadActive: boolean;
-  storageSizeInBytes: number | null;
-  downloadBytesCompleted: number;
-  downloadComplete: boolean;
-}) => {
-  if (downloadActive === false) {
-    if (downloadComplete === true) {
-      return "Complete";
-    }
-    if (typeof size === "number") {
-      const mbSize = Math.round(size / 1000000);
-      if (mbSize < 1) {
-        return "<1 mb";
-      } else if (mbSize > 999) {
-        return `${mbSize / 1000} gb`;
-      } else {
-        return `${mbSize} mb`;
-      }
-    }
-    return "";
-  }
-  if (storageSizeInBytes === null) {
-    return "0%";
-  }
-  return `${Math.floor((downloadBytesCompleted / storageSizeInBytes) * 100)}%`;
-};
+import { setDownloadActive } from "../src/redux/download";
+import HomeGetHeader from "../src/operations/HomeGetHeader";
+import HomeBottomDescription from "../src/components/HomeBottomDescription";
 
 const Home: NextPage = () => {
   const [gotUser, setGotUser] = useState<boolean>(false);
@@ -55,6 +18,7 @@ const Home: NextPage = () => {
   const { currentUser } = useSelector((state: RootStateType) => state.auth);
   const { downloadActive, downloadBytesCompleted, downloadComplete } =
     useSelector((state: RootStateType) => state.download);
+
   const router = useRouter();
   const dispatch = useDispatch();
 
@@ -69,7 +33,7 @@ const Home: NextPage = () => {
     return <GeneralLoading />;
   }
 
-  const displayHeader = GetDisplayNumber({
+  const displayHeader = HomeGetHeader({
     size: currentUser.storageSizeInBytes,
     downloadActive,
     storageSizeInBytes: currentUser.storageSizeInBytes,
@@ -85,35 +49,10 @@ const Home: NextPage = () => {
     AuthLogOut({ dispatch, router });
   };
 
-  const BottomDescription = () => {
-    if (downloadActive === false) {
-      if (downloadComplete === true) {
-        return (
-          <small className={styles.dowloadInfoText}>
-            It may take a moment for your browser to catch up. Downloads should
-            be visible in your computer's <i>Downloads</i> folder.
-          </small>
-        );
-      }
-      return (
-        <small className={styles.dowloadInfoText}>
-          Type <i>Confirm</i> and press <i>Download</i> to save all Render Vault
-          uploads to your PC Downloads folder.
-        </small>
-      );
-    }
-    return (
-      <small className={styles.dowloadInfoText}>
-        Download in progress. Please do not close the tab. All buttons are
-        frozen until completion. Please permit multiple downloads if prompted.
-      </small>
-    );
-  };
-
   const ActivateDownload = () => {
     if (downloadActive === false && confirmInput.toUpperCase() === "CONFIRM") {
       DownloadManager({ dispatch, userID: currentUser.userID });
-      dispatch(setDownloadAcive(true));
+      dispatch(setDownloadActive(true));
     }
   };
 
@@ -151,7 +90,10 @@ const Home: NextPage = () => {
                 </button>
               </div>
               <div className={styles.infoTextHolder}>
-                <BottomDescription />
+                <HomeBottomDescription
+                  downloadActive={downloadActive}
+                  downloadComplete={downloadComplete}
+                />
               </div>
             </div>
           </div>

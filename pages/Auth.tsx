@@ -1,34 +1,11 @@
 import React, { useState } from "react";
-import { Auth } from "aws-amplify";
-import { useRouter, NextRouter } from "next/router";
+import { useRouter } from "next/router";
 import Image from "next/image";
 import Head from "next/head";
 import type { NextPage } from "next";
 import styles from "../styles/Auth.module.css";
-import AuthGetCurrentUser from "../src/operations/AuthGetCurrentUser";
 import { useDispatch } from "react-redux";
-import { DispatchType } from "../src/redux/store";
-
-async function SignIn(
-  email: string,
-  password: string,
-  setErrorMessage: Function,
-  dispatch: DispatchType,
-  router: NextRouter
-) {
-  try {
-    const currentUser = await Auth.signIn(email, password);
-    if (typeof currentUser.attributes["custom:userID"] === "string") {
-      // GetCurrentUser automatically pushes to index
-      AuthGetCurrentUser({ dispatch, router });
-    } else {
-      setErrorMessage("Incorrect email or password.");
-    }
-  } catch (error) {
-    setErrorMessage("Incorrect email or password.");
-    console.log(error);
-  }
-}
+import AuthSignIn from "../src/operations/AuthSignIn";
 
 const Authentication: NextPage = () => {
   const [emailInput, setEmailInput] = useState<string>("");
@@ -45,7 +22,13 @@ const Authentication: NextPage = () => {
       setErrorMessage("Please provide your password.");
     } else {
       setErrorMessage("");
-      SignIn(emailInput, passwordInput, setErrorMessage, dispatch, router);
+      AuthSignIn({
+        email: emailInput,
+        password: passwordInput,
+        setErrorMessage,
+        dispatch,
+        router,
+      });
     }
   };
 
@@ -77,9 +60,9 @@ const Authentication: NextPage = () => {
                 layout="fill"
                 objectFit="contain"
                 alt="Render text logo"
+                priority={true}
               />
             </div>
-
             <form className={styles.pageForm}>
               <div className={styles.itemSpacer}>
                 <input

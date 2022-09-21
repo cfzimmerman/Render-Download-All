@@ -64,11 +64,6 @@
   align-items: center;
   flex-direction: column;
   margin-top: var(--size-small-padding);
-  border: calc(var(--size-small-padding) / 4) solid var(--color-accent-90);
-  box-shadow: var(--shadow-box);
-  border-radius: var(--size-xl-padding);
-  padding: var(--size-small-padding);
-  margin: var(--size-small-padding) 0;
 }
 .infoTextHolder {
   display: flex;
@@ -101,6 +96,13 @@
   }
   #confirmInput {
     margin-right: var(--size-standard-padding);
+  }
+  .downloadWrapper {
+    border: calc(var(--size-small-padding) / 4) solid var(--color-accent-90);
+    box-shadow: var(--shadow-box);
+    border-radius: var(--size-xl-padding);
+    padding: var(--size-small-padding);
+    margin: var(--size-small-padding) 0;
   }
 }
 

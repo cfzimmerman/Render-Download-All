@@ -18,8 +18,9 @@ const slice = createSlice({
     clearDownload: (state) => {
       state.downloadActive = false;
       state.downloadBytesCompleted = 0;
+      state.downloadComplete = false;
     },
-    setDownloadAcive: (state, action: PayloadAction<boolean>) => {
+    setDownloadActive: (state, action: PayloadAction<boolean>) => {
       state.downloadActive = action.payload;
     },
     setDownloadBytesCompleted: (state, action: PayloadAction<number>) => {
@@ -38,7 +39,7 @@ export const {
   clearDownload,
   setDownloadBytesCompleted,
   incrementDownloadBytesCompleted,
-  setDownloadAcive,
+  setDownloadActive,
   setDownloadComplete,
 } = slice.actions;
 export default slice.reducer;

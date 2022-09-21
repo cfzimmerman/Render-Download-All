@@ -15,7 +15,7 @@ async function DownloadSingle({
   try {
     const blobResult = await Storage.get(contentKey, { download: true });
     if (typeof blobResult != "undefined") {
-      //@ts-ignore
+      //@ts-ignore (Potential undesirable types are excluded by the undefined condition. blobResult.Body is a blob.)
       fileDownload(blobResult.Body, contentKey);
       // @ts-ignore
       dispatch(incrementDownloadBytesCompleted(blobResult.Body.size));
