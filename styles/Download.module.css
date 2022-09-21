@@ -1,0 +1,10 @@
+.pageContainer {
+  background-color: aquamarine;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.darkText {
+  color: var(--color-primary);
+}

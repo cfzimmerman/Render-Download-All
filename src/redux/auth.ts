@@ -19,6 +19,9 @@ const slice = createSlice({
     currentUser: "preAuth",
   } as InitialSliceType,
   reducers: {
+    clearAuth: (state) => {
+      state.currentUser = "preAuth";
+    },
     clearCurrentUser: (state) => {
       state.currentUser = "preAuth";
     },
@@ -28,5 +31,5 @@ const slice = createSlice({
   },
 });
 
-export const { clearCurrentUser, setCurrentUser } = slice.actions;
+export const { clearAuth, clearCurrentUser, setCurrentUser } = slice.actions;
 export default slice.reducer;

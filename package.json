@@ -12,6 +12,7 @@
     "@aws-amplify/api-graphql": "^2.3.17",
     "@reduxjs/toolkit": "^1.8.5",
     "aws-amplify": "^4.3.35",
+    "js-file-download": "^0.4.12",
     "next": "12.3.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",

@@ -3,6 +3,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  width: 100%;
 }
 
 .contentHolder {
@@ -12,6 +13,11 @@
   border-radius: var(--size-large-padding);
   padding: var(--size-large-padding);
   align-items: center;
+  justify-content: center;
+}
+
+.downloadHeader[data-downloading="true"] {
+  color: var(--color-all-good);
 }
 
 .fadedText {
@@ -23,64 +29,90 @@
 }
 
 #confirmInput[data-text="CONFIRM"] {
-  background-color: #94ffdf;
+  background-color: var(--color-all-good);
 }
 
+.lineDivider {
+  width: 100%;
+  height: calc(var(--size-small-padding) / 2);
+  background-color: var(--color-accent-90);
+  margin: var(--size-small-padding);
+  box-shadow: var(--shadow-box);
+  border-radius: var(--size-small-padding);
+}
+.downloadBox {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+}
+
+.boxInfoContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+}
+
+.downloadWrapper {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-top: var(--size-large-padding);
+}
+.infoTextHolder {
+  display: flex;
+  margin-top: var(--size-small-padding);
+  margin-bottom: var(--size-standard-padding);
+}
+.dowloadInfoText {
+  color: var(--color-accent-90);
+  text-align: center;
+}
+.nameBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
 @media (orientation: landscape) {
-  .downloadBox {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    width: 100%;
-    align-items: center;
+  .pageWrapper {
+    height: 100vh;
   }
-  .boxInfoContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    width: 100%;
-  }
-  .downloadWrapper {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-  }
-  #confirmInput {
-    margin-right: var(--size-standard-padding);
-  }
-  .infoTextHolder {
-    display: flex;
-    margin-top: var(--size-small-padding);
-    margin-bottom: var(--size-standard-padding);
-  }
-  .dowloadInfoText {
-    color: var(--color-accent-90);
-    text-align: center;
+  .contentHolder {
+    height: 80vh;
+    width: 80vh;
+    background-color: var(--color-primary);
   }
   .confirmBox {
     margin: var(--size-standard-padding);
     display: flex;
     flex-direction: row;
   }
-  .lineDivider {
-    width: 100%;
-    height: calc(var(--size-small-padding) / 2);
-    background-color: var(--color-accent-90);
-    margin: var(--size-small-padding);
-    box-shadow: var(--shadow-box);
-    border-radius: var(--size-small-padding);
+  #confirmInput {
+    margin-right: var(--size-standard-padding);
   }
-  .nameBox {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
+}
+
+@media (orientation: portrait) {
+  .pageWrapper {
+    height: 100%;
   }
   .contentHolder {
     height: 80vh;
-    width: 80vh;
+    width: 95vw;
     background-color: var(--color-primary);
+  }
+  .confirmBox {
+    margin: var(--size-standard-padding);
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+  }
+  #confirmInput {
+    margin-bottom: var(--size-standard-padding);
   }
 }
