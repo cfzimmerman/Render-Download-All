@@ -9,6 +9,8 @@ import styles from "../styles/Home.module.css";
 import Head from "next/head";
 import AuthLogOut from "../src/operations/AuthLogOut";
 import DownloadSingle from "../src/operations/DownloadSingle";
+import { setDownloadAcive } from "../src/redux/download";
+import DownloadManager from "../src/operations/DownloadManager";
 
 // https://www.npmjs.com/package/js-file-download
 
@@ -17,13 +19,18 @@ const GetDisplayNumber = ({
   downloadActive,
   storageSizeInBytes,
   downloadBytesCompleted,
+  downloadComplete,
 }: {
   size: number | null;
   downloadActive: boolean;
   storageSizeInBytes: number | null;
   downloadBytesCompleted: number;
+  downloadComplete: boolean;
 }) => {
   if (downloadActive === false) {
+    if (downloadComplete === true) {
+      return "Complete";
+    }
     if (typeof size === "number") {
       const mbSize = Math.round(size / 1000000);
       if (mbSize < 1) {
@@ -46,9 +53,8 @@ const Home: NextPage = () => {
   const [gotUser, setGotUser] = useState<boolean>(false);
   const [confirmInput, setConfirmInput] = useState<string>("");
   const { currentUser } = useSelector((state: RootStateType) => state.auth);
-  const { downloadActive, downloadBytesCompleted } = useSelector(
-    (state: RootStateType) => state.download
-  );
+  const { downloadActive, downloadBytesCompleted, downloadComplete } =
+    useSelector((state: RootStateType) => state.download);
   const router = useRouter();
   const dispatch = useDispatch();
 
@@ -68,6 +74,7 @@ const Home: NextPage = () => {
     downloadActive,
     storageSizeInBytes: currentUser.storageSizeInBytes,
     downloadBytesCompleted,
+    downloadComplete,
   });
 
   const UpdateConfirmInput = (data: any) => {
@@ -80,6 +87,14 @@ const Home: NextPage = () => {
 
   const BottomDescription = () => {
     if (downloadActive === false) {
+      if (downloadComplete === true) {
+        return (
+          <small className={styles.dowloadInfoText}>
+            It may take a moment for your browser to catch up. Downloads should
+            be visible in your computer's <i>Downloads</i> folder.
+          </small>
+        );
+      }
       return (
         <small className={styles.dowloadInfoText}>
           Type <i>Confirm</i> and press <i>Download</i> to save all Render Vault
@@ -90,9 +105,16 @@ const Home: NextPage = () => {
     return (
       <small className={styles.dowloadInfoText}>
         Download in progress. Please do not close the tab. All buttons are
-        frozen until completion.
+        frozen until completion. Please permit multiple downloads if prompted.
       </small>
     );
+  };
+
+  const ActivateDownload = () => {
+    if (downloadActive === false && confirmInput.toUpperCase() === "CONFIRM") {
+      DownloadManager({ dispatch, userID: currentUser.userID });
+      dispatch(setDownloadAcive(true));
+    }
   };
 
   return (
@@ -101,13 +123,13 @@ const Home: NextPage = () => {
         <div className={styles.downloadBox}>
           <p className={styles.fadedText}>Vault: Download All</p>
           <div className={styles.boxInfoContainer}>
-            <h1
-              className={styles.downloadHeader}
-              data-downloading={downloadActive.toString()}
-            >
-              {displayHeader}
-            </h1>
             <div className={styles.downloadWrapper}>
+              <h1
+                className={styles.downloadHeader}
+                data-downloading={downloadActive.toString()}
+              >
+                {displayHeader}
+              </h1>
               <div className={styles.confirmBox}>
                 <input
                   className="fullBarInput"
@@ -123,6 +145,7 @@ const Home: NextPage = () => {
                   className="halfBarButton"
                   type="button"
                   disabled={downloadActive}
+                  onClick={ActivateDownload}
                 >
                   <p className={styles.logOutText}>Download</p>
                 </button>
@@ -133,7 +156,6 @@ const Home: NextPage = () => {
             </div>
           </div>
         </div>
-        <div className={styles.lineDivider} />
         <div className={styles.nameBox}>
           <h3 className={styles.fadedText}>{currentUser.displayName}</h3>
           <button

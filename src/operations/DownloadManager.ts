@@ -1,7 +1,9 @@
 import { GraphQLResult } from "@aws-amplify/api-graphql";
 import { API, graphqlOperation } from "aws-amplify";
 import { PostsByUsersQuery } from "../API";
+import { setDownloadAcive, setDownloadComplete } from "../redux/download";
 import { DispatchType } from "../redux/store";
+import DownloadSingle from "./DownloadSingle";
 
 const GetNextToken = (nextToken: string | null) => {
   if (nextToken === null) {
@@ -41,13 +43,25 @@ async function DownloadRecursion({
                 items {
                     id
                     contentkey
-                    sizeinbytes
                 }
                 nextToken
             }
         }
     `)
     )) as GraphQLResult<PostsByUsersQuery>;
+
+    const postResults = data?.postsByUsers?.items;
+
+    if (typeof postResults === "object") {
+      for await (const item of postResults) {
+        if (typeof item?.contentkey === "string") {
+          await DownloadSingle({
+            dispatch,
+            contentKey: item?.contentkey,
+          });
+        }
+      }
+    }
 
     if (typeof data?.postsByUsers?.nextToken === "string") {
       DownloadRecursion({
@@ -78,6 +92,8 @@ async function DownloadManager({ dispatch, userID }: InputTypes) {
       userID,
       nextToken: null,
     });
+    dispatch(setDownloadAcive(false));
+    dispatch(setDownloadComplete(true));
   } catch (error) {
     console.log(error);
   }

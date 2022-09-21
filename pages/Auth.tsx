@@ -19,8 +19,8 @@ async function SignIn(
   try {
     const currentUser = await Auth.signIn(email, password);
     if (typeof currentUser.attributes["custom:userID"] === "string") {
+      // GetCurrentUser automatically pushes to index
       AuthGetCurrentUser({ dispatch, router });
-      router.push("/");
     } else {
       setErrorMessage("Incorrect email or password.");
     }

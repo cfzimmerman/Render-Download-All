@@ -46,6 +46,7 @@ async function AuthGetCurrentUser({ dispatch, router }: InputTypes) {
           storageSizeInBytes: data.getUsers.storagesizeinbytes,
         };
         dispatch(setCurrentUser(currentUser));
+        router.push("/");
       }
     } else {
       router.push("/Auth");
