@@ -28,7 +28,7 @@ const Home: NextPage = () => {
       AuthCheckAuth({ dispatch, currentUser, router });
       setGotUser(true);
     }
-  });
+  }, [gotUser, dispatch, currentUser, router, setGotUser]);
 
   if (typeof currentUser != "object") {
     return <GeneralLoading />;
@@ -65,7 +65,7 @@ const Home: NextPage = () => {
           content="width=device-width, initial-scale=1, viewport-fit=cover"
         />
         <meta name="theme-color" content="#000028" />
-        <title>Render: Download All</title>
+        <title>Download All - Render</title>
       </Head>
       <section className={styles.contentHolder}>
         <div className={styles.downloadBox}>

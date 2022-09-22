@@ -49,7 +49,7 @@ const Authentication: NextPage = () => {
             content="width=device-width, initial-scale=1, viewport-fit=cover"
           />
           <meta name="theme-color" content="#000000" />
-          <title>Render: Log In</title>
+          <title>Log In - Render</title>
         </Head>
         <main className={styles.pageWrapper}>
           <section className={styles.contentContainer}>
