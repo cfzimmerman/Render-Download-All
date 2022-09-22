@@ -60,12 +60,21 @@ const Home: NextPage = () => {
   return (
     <main className={styles.pageWrapper}>
       <Head>
+        <title>Download All - Render</title>
         <meta
           name="viewport"
           content="width=device-width, initial-scale=1, viewport-fit=cover"
         />
         <meta name="theme-color" content="#000028" />
-        <title>Download All - Render</title>
+        <meta property="og:title" content="Download All - Render" />
+        <meta
+          property="og:image"
+          content="https://mobile965f75596afb4ca68a1e637998665f92161112-production.s3.amazonaws.com/public/CompanyStock/DA-OGPreview.png"
+        />
+        <meta
+          property="og:description"
+          content="Back up all Vault-saved uploads to your local storage."
+        />
       </Head>
       <section className={styles.contentHolder}>
         <div className={styles.downloadBox}>
