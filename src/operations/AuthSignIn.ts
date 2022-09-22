@@ -23,8 +23,6 @@ async function AuthSignIn({
     if (typeof currentUser.attributes["custom:userID"] === "string") {
       // GetCurrentUser automatically pushes to index
       AuthGetCurrentUser({ dispatch, router });
-    } else {
-      setErrorMessage("Incorrect email or password.");
     }
   } catch (error) {
     setErrorMessage("Incorrect email or password.");

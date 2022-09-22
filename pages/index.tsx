@@ -1,16 +1,17 @@
 import { useEffect, useState } from "react";
 import type { NextPage } from "next";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import AuthCheckAuth from "../src/operations/AuthCheckAuth";
 import { RootStateType } from "../src/redux/store";
 import GeneralLoading from "../src/components/GeneralLoading";
-import styles from "../styles/Home.module.css";
 import AuthLogOut from "../src/operations/AuthLogOut";
 import DownloadManager from "../src/operations/DownloadManager";
 import { setDownloadActive } from "../src/redux/download";
 import HomeGetHeader from "../src/operations/HomeGetHeader";
 import HomeBottomDescription from "../src/components/HomeBottomDescription";
+import styles from "../styles/Home.module.css";
 
 const Home: NextPage = () => {
   const [gotUser, setGotUser] = useState<boolean>(false);
@@ -58,6 +59,14 @@ const Home: NextPage = () => {
 
   return (
     <main className={styles.pageWrapper}>
+      <Head>
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, viewport-fit=cover"
+        />
+        <meta name="theme-color" content="#000028" />
+        <title>Render: Download All</title>
+      </Head>
       <section className={styles.contentHolder}>
         <div className={styles.downloadBox}>
           <p className={styles.fadedText}>Vault: Download All</p>
@@ -86,7 +95,7 @@ const Home: NextPage = () => {
                   disabled={downloadActive}
                   onClick={ActivateDownload}
                 >
-                  <p className={styles.logOutText}>Download</p>
+                  <p className={styles.darkText}>Download</p>
                 </button>
               </div>
               <div className={styles.infoTextHolder}>
@@ -106,7 +115,7 @@ const Home: NextPage = () => {
             onClick={LogOut}
             disabled={downloadActive}
           >
-            <p className={styles.logOutText}>Log out</p>
+            <p className={styles.darkText}>Log out</p>
           </button>
         </div>
       </section>

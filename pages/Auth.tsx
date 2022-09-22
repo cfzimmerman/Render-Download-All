@@ -1,11 +1,11 @@
 import React, { useState } from "react";
+import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import Head from "next/head";
-import type { NextPage } from "next";
-import styles from "../styles/Auth.module.css";
 import { useDispatch } from "react-redux";
 import AuthSignIn from "../src/operations/AuthSignIn";
+import styles from "../styles/Auth.module.css";
 
 const Authentication: NextPage = () => {
   const [emailInput, setEmailInput] = useState<string>("");
@@ -21,7 +21,7 @@ const Authentication: NextPage = () => {
     } else if (passwordInput.length < 1) {
       setErrorMessage("Please provide your password.");
     } else {
-      setErrorMessage("");
+      setErrorMessage("Checking");
       AuthSignIn({
         email: emailInput,
         password: passwordInput,
@@ -49,6 +49,7 @@ const Authentication: NextPage = () => {
             content="width=device-width, initial-scale=1, viewport-fit=cover"
           />
           <meta name="theme-color" content="#000000" />
+          <title>Render: Log In</title>
         </Head>
         <main className={styles.pageWrapper}>
           <section className={styles.contentContainer}>
@@ -83,7 +84,9 @@ const Authentication: NextPage = () => {
                 />
               </div>
               <div className={styles.itemSpacer}>
-                <small className={styles.errorMessage}>{errorMessage}</small>
+                <small className={styles.errorMessage} data-text={errorMessage}>
+                  {errorMessage}
+                </small>
               </div>
               <div className={styles.halfBarButtonHolder}>
                 <button
