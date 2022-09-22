@@ -60,7 +60,7 @@ async function DownloadRecursion({
     }
 
     if (typeof data?.postsByUsers?.nextToken === "string") {
-      DownloadRecursion({
+      await DownloadRecursion({
         dispatch,
         queryLimit,
         userID,
