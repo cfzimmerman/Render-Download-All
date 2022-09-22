@@ -20,7 +20,7 @@ const HomeGetHeader = ({
       if (mbSize < 1) {
         return "<1 mb";
       } else if (mbSize > 999) {
-        return `${mbSize / 1000} gb`;
+        return `${(mbSize / 1000).toFixed(1)} gb`;
       } else {
         return `${mbSize} mb`;
       }
