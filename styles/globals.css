@@ -31,15 +31,15 @@ body {
   box-sizing: border-box;
 }
 
-  html {
-    color-scheme: dark;
-  }
-  body {
-    color: var(--color-accent-on);
-    background: var(--color-secondary);
-    overflow: hidden;
-  }
+html {
+  color-scheme: dark;
+}
 
+body {
+  color: var(--color-accent-on);
+  background: var(--color-secondary);
+  overflow: hidden;
+}
 
 h1 {
   font-size: 5rem;
@@ -112,6 +112,7 @@ main {
 .fullBarInput::placeholder {
   color: var(--color-primary-90);
 }
+
 .halfBarButton {
   display: flex;
   align-items: center;
@@ -128,12 +129,4 @@ main {
 }
 .halfBarButton:focus {
   background-color: var(--color-accent-on);
-}
-
-@media (orientation: landscape) {
-
-}
-
-@media (orientation: portrait) {
-
 }

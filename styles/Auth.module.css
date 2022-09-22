@@ -18,12 +18,14 @@
   justify-content: center;
   margin-bottom: var(--size-large-padding);
 }
+
 .contentContainer {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
+
 .itemSpacer {
   margin-bottom: var(--size-small-padding);
   display: flex;
